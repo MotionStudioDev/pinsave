@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.hostname === '';
 
     // In local dev, we use the full URL. In production/Vercel, we use relative paths.
-    const API_BASE = isLocal ? 'http://localhost:8000' : '';
+    const API_BASE = isLocal ? 'http://localhost:8000/api' : '/api';
 
     // Paste Handle
     pasteBtn.addEventListener('click', async () => {
