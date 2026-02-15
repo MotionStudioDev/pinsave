@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.hostname === '127.0.0.1' ||
         window.location.hostname === '';
 
-    const API_URL = isLocal ? 'http://localhost:8000/api' : '/api';
+    // In local dev, we use the full URL. In production/Vercel, we use relative paths.
+    const API_BASE = isLocal ? 'http://localhost:8000' : '';
 
     // Paste Handle
     pasteBtn.addEventListener('click', async () => {
@@ -59,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadBtn.disabled = true;
 
         try {
-            const response = await fetch(`${API_URL}/extract`, {
+            const response = await fetch(`${API_BASE}/extract`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -67,7 +68,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify({ url: url }),
             });
 
-            const data = await response.json();
+            const text = await response.text();
+            let data;
+            try {
+                data = JSON.parse(text);
+            } catch (e) {
+                console.error('Failed to parse JSON. Response text:', text);
+                throw new Error('Sunucudan geçersiz bir cevap geldi.');
+            }
 
             if (!response.ok) {
                 throw new Error(data.detail || 'Extraction failed');

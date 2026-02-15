@@ -51,7 +51,7 @@ def get_image_qualities(img_url: str) -> List[Dict]:
         {"label": "Standard (474x)", "url": base_url.replace("/originals/", "/474x/"), "ext": ext}
     ]
 
-@app.get("/api/download")
+@app.get("/download")
 async def download_proxy(
     url: str = Query(...), 
     filename: str = Query("download"),
@@ -267,7 +267,7 @@ def extract_pinterest_data(url: str) -> Dict:
             return fallback_data
         raise HTTPException(status_code=400, detail=f"Fail: {str(e)[:50]}")
 
-@app.post("/api/extract", response_model=PinterestResponse)
+@app.post("/extract", response_model=PinterestResponse)
 async def extract(request: PinterestRequest):
     url = request.url.split('?')[0] if '?' in request.url else request.url
     if not url or ("pinterest.com" not in url and "pin.it" not in url):
