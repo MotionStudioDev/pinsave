@@ -10,12 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const playIcon = document.getElementById('play-icon');
     const linksContainer = document.getElementById('links-container');
 
-    // Dynamic API URL for Vercel/Production compatibility
+    // Dynamic API URL for local dev vs production
     const isLocal = window.location.hostname === 'localhost' ||
         window.location.hostname === '127.0.0.1' ||
         window.location.hostname === '';
 
-    // In local dev, we use the full URL. In production/Vercel, we use relative paths.
+    // In local dev, use localhost. In production (Render), use relative path (same domain)
     const API_BASE = isLocal ? 'http://localhost:8000/api' : '/api';
 
     // Paste Handle

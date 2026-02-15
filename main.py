@@ -6,6 +6,7 @@ import re
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Optional, List, Dict
 import os
@@ -21,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Serve static files (frontend)
+app.mount("/static", StaticFiles(directory=".", html=True), name="static")
 
 class PinterestRequest(BaseModel):
     url: str
@@ -277,7 +281,8 @@ async def extract(request: PinterestRequest):
 
 @app.get("/")
 async def root():
-    return {"message": "Pinterest Downloader API is running"}
+    from fastapi.responses import FileResponse
+    return FileResponse("index.html")
 
 if __name__ == "__main__":
     import uvicorn
