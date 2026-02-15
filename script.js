@@ -97,7 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             data.links.forEach(link => {
                 const btn = document.createElement('a');
                 // Use our proxy endpoint with the original URL as referer to bypass 403
-                const downloadUrl = `${API_URL}/download?url=${encodeURIComponent(link.url)}&filename=${encodeURIComponent(data.title.substring(0, 50))}&referer=${encodeURIComponent(url)}`;
+                // Use our proxy endpoint with the original URL as referer to bypass 403
+                const downloadUrl = `${API_BASE}/download?url=${encodeURIComponent(link.url)}&filename=${encodeURIComponent(data.title.substring(0, 50))}&referer=${encodeURIComponent(url)}`;
 
                 btn.href = downloadUrl;
                 btn.className = 'quality-btn';
