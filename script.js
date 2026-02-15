@@ -11,9 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const linksContainer = document.getElementById('links-container');
 
     // Dynamic API URL for Vercel/Production compatibility
-    const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:8000/api'
-        : '/api';
+    const isLocal = window.location.hostname === 'localhost' ||
+        window.location.hostname === '127.0.0.1' ||
+        window.location.hostname === '';
+
+    const API_URL = isLocal ? 'http://localhost:8000/api' : '/api';
 
     // Paste Handle
     pasteBtn.addEventListener('click', async () => {
@@ -87,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data.links.forEach(link => {
                 const btn = document.createElement('a');
                 // Use our proxy endpoint with the original URL as referer to bypass 403
-                const downloadUrl = `http://localhost:8000/api/download?url=${encodeURIComponent(link.url)}&filename=${encodeURIComponent(data.title.substring(0, 50))}&referer=${encodeURIComponent(url)}`;
+                const downloadUrl = `${API_URL}/download?url=${encodeURIComponent(link.url)}&filename=${encodeURIComponent(data.title.substring(0, 50))}&referer=${encodeURIComponent(url)}`;
 
                 btn.href = downloadUrl;
                 btn.className = 'quality-btn';
