@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+yt-dlp
+requests
+beautifulsoup4
+pydantic
+python-multipart

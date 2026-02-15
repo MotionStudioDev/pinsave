@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const playIcon = document.getElementById('play-icon');
     const linksContainer = document.getElementById('links-container');
 
-    const API_URL = 'http://localhost:8000/api/extract';
+    // Dynamic API URL for Vercel/Production compatibility
+    const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+        ? 'http://localhost:8000/api'
+        : '/api';
 
     // Paste Handle
     pasteBtn.addEventListener('click', async () => {
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadBtn.disabled = true;
 
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(`${API_URL}/extract`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
