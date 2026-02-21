@@ -22,6 +22,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeHistoryBtn = getElement('close-history');
     const historyList = getElement('history-list');
     const clearHistoryBtn = getElement('clear-history');
+    const preloader = document.getElementById('preloader');
+
+    // Preloader Logic - Sayfa yüklendiğinde loading ekranını kaldır
+    if (preloader) {
+        const hidePreloader = () => {
+            preloader.style.transition = 'opacity 0.5s ease';
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        };
+
+        window.addEventListener('load', hidePreloader);
+
+        // Fallback: Eğer load eventi gecikirse 2 saniye sonra zorla kapat
+        setTimeout(hidePreloader, 2000);
+    }
 
     // Eğer kritik elementler yoksa çalışmayı durdurma, sadece uyar
     if (!urlInput || !downloadBtn) {
