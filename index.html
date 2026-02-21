@@ -1,87 +1,234 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="tr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="PinSave - Premium Pinterest Video ve Resim İndirici. Hızlı, güvenli ve ücretsiz Pinterest içerikleri indirin.">
+    <meta name="keywords" content="Pinterest downloader, video indir, resim indir, pinterest, pin save, free download">
+    <meta name="author" content="PinSave">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="PinSave | Premium Pinterest Downloader">
+    <meta property="og:description" content="Pinterest Video ve Resim İndirici - Hızlı ve Güvenli İndirme">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    
     <title>PinSave | Premium Pinterest Downloader</title>
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23E60023'/%3E%3Ctext x='50%25' y='50%25' font-family='Arial, sans-serif' font-weight='800' font-size='16' fill='white' text-anchor='middle' dy='.3em'%3EPS%3C/text%3E%3C/svg%3E">
-    <link rel="stylesheet" href="style.css">
+    
+    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS for modern utilities -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Theme Management -->
+    <script>
+        // Check for saved theme preference or default to dark
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+    </script>
 </head>
 
 <body>
+    <!-- Preloader -->
     <div id="preloader">
         <div class="circles-loader"></div>
     </div>
 
+    <!-- Background Effects -->
     <div class="background-blobs">
         <div class="blob blob-1"></div>
         <div class="blob blob-2"></div>
         <div class="blob blob-3"></div>
     </div>
 
-    <main class="container">
-        <header class="fade-in">
-            <div class="logo">
+    <!-- Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-content">
+            <div class="nav-logo">
                 <div class="ps-logo">PS</div>
-                <h1>PinSave</h1>
+                <span>PinSave</span>
             </div>
-            <p>Pinterest Video & Resim İndirici</p>
-        </header>
+            <div class="nav-actions">
+                <button class="nav-btn" id="history-btn" title="İndirme Geçmişi">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"></path>
+                    </svg>
+                </button>
+                
+                <!-- Theme Toggle moved inside nav -->
+                <div class="theme-toggle" id="theme-toggle" title="Tema Değiştir">
+                    <div class="theme-toggle-slider">
+                        <span id="theme-icon">🌙</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 
+    <!-- History Modal -->
+    <div id="history-modal" class="modal hidden">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h3>İndirme Geçmişi</h3>
+                <button id="close-history" class="close-btn">&times;</button>
+            </div>
+            <div id="history-list" class="history-list">
+                <!-- History items will be injected here -->
+                <p class="empty-history">Henüz indirme geçmişi yok.</p>
+            </div>
+            <div class="modal-footer">
+                <button id="clear-history" class="secondary-btn">Geçmişi Temizle</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <header class="fade-in hero-content">
+                <div class="logo">
+                    <div class="ps-logo">PS</div>
+                    <h1>PinSave</h1>
+                </div>
+                <p class="hero-subtitle">Pinterest Video & Resim İndirici</p>
+                <p class="hero-description">
+                    Hızlı, güvenli ve ücretsiz Pinterest içerikleri indirin. 
+                    Video ve resimleri tek tıkla kaydedin.
+                </p>
+            </header>
+        </section>
+
+        <!-- Downloader Section -->
         <section class="downloader-section">
-            <div class="input-container glass-card">
-                <div class="input-wrapper">
+            <!-- Enhanced Input Container -->
+            <div class="input-container glass-card enhanced-card">
+                <div class="input-header">
+                    <h3>Pin Linki Yapıştır</h3>
+                </div>
+                
+                <div class="input-wrapper input-enhanced">
                     <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                         stroke-width="2">
                         <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
                         <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
                     </svg>
-                    <input type="text" id="url-input" placeholder="Bir pin linki yapıştırın..." autocomplete="off">
+                    <input type="text" id="url-input" placeholder="https://tr.pinterest.com/pin/..." autocomplete="off">
                 </div>
-                <button id="paste-btn" class="secondary-btn">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                        <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
-                    Yapıştır
-                </button>
-                <button id="download-btn">Dönüştür</button>
+                
+                <div class="input-actions">
+                    <button id="paste-btn" class="secondary-btn btn-enhanced">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                            <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                        </svg>
+                        Yapıştır
+                    </button>
+                    <button id="download-btn" class="btn-enhanced">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        İndir
+                    </button>
+                </div>
             </div>
 
-            <div id="loading" class="hidden">
-                <div class="loader"></div>
-                <p>Kontrol ediliyor...</p>
+            <!-- Enhanced Loading -->
+            <div id="loading" class="hidden glass-card">
+                <div class="loading-content">
+                    <div class="loading-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <p class="loading-text">Pin analiz ediliyor...</p>
+                </div>
             </div>
 
+            <!-- Enhanced Error -->
             <div id="error-message" class="hidden glass-card error">
-                <p>Opps! Bir hata oluştu. Lütfen linki kontrol edin.</p>
+                <div class="error-content">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <h4>Hata Oluştu</h4>
+                    <p id="error-text">Bir hata oluştu. Lütfen linki kontrol edin.</p>
+                </div>
             </div>
 
-            <div id="result-container" class="hidden glass-card fade-in">
+            <!-- Enhanced Results -->
+            <div id="result-container" class="hidden glass-card fade-in result-card">
+                <div class="result-header">
+                    <h3>İndirme Başarılı</h3>
+                </div>
+                
                 <div class="media-preview">
                     <img id="thumbnail" src="" alt="Thumbnail">
-                    <div class="play-icon hidden" id="play-icon">▶</div>
+                    <div class="play-icon hidden" id="play-icon">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="white">
+                            <polygon points="5,3 19,12 5,21"></polygon>
+                        </svg>
+                    </div>
                 </div>
+                
                 <div class="media-info">
                     <h2 id="result-title">Media Title</h2>
-                    <div id="links-container" class="links-grid">
-                        <!-- Quality buttons will be injected here -->
+                    
+                    <div class="download-actions">
+                        <h4>Kalite Seçenekleri</h4>
+                        <div id="links-container" class="links-grid">
+                            <!-- Quality buttons will be injected here -->
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <footer class="glass-card">
-            <p>&copy; Tüm hakları saklıdır.</p>
+        <!-- Features Section -->
+        <section class="features-section">
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Hızlı İndirme</h4>
+                    <p>Pin içeriklerini saniyeler içinde indirin</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">🔒</div>
+                    <h4>Güvenli</h4>
+                    <p>Gizliliğinize önem veriyoruz</p>
+                </div>
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">📱</div>
+                    <h4>Mobil Uyumlu</h4>
+                    <p>Tüm cihazlarda mükemmel çalışır</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer-enhanced">
+            <p>&copy; 2024 PinSave. Tüm hakları saklıdır.</p>
         </footer>
     </main>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=1.1"></script>
 </body>
 
 </html>
